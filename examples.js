@@ -261,3 +261,58 @@ Function.prototype.method = function (name, func) {
 
 
 ++[[]][+[]]+[+[]]   // 10
+
+From https://medium.freecodecamp.org/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f
+
+1. Remove duplicates from an array of numbers/strings
+let values = [3, 1, 3, 5, 2, 4, 4, 4];
+let uniqueValues = [...new Set(values)];
+
+5. Flattening an array of arrays
+let nested = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+let flat = nested.reduce((acc, it) => [...acc, ...it], []);
+
+6. Create an object that contains the frequency of the specified key
+let users = [
+  { id: 11, name: 'Adam', age: 23, group: 'editor' },
+  { id: 47, name: 'John', age: 28, group: 'admin' },
+  { id: 85, name: 'William', age: 34, group: 'editor' },
+  { id: 97, name: 'Oliver', age: 28, group: 'admin' }
+];
+let groupByAge = users.reduce((acc, it) =>
+  ({ ...acc, [it.age]: (acc[it.age] || 0) + 1 }),
+{});
+
+7. Indexing an array of objects (lookup table)
+let uTable = users.reduce((acc, it) => ({...acc, [it.id]: it }), {})
+
+8. Extract the unique values for the given key of each item in the array
+let listOfUserGroups = [...new Set(users.map(it => it.group))];
+
+9. Object key-value map reversal
+let cities = {
+  Lyon: 'France',
+  Berlin: 'Germany',
+  Paris: 'France'
+};
+let countries = Object.keys(cities).reduce(
+  (acc, k) => (acc[cities[k]] = [...(acc[cities[k]] || []), k], acc) , {});
+// countries is
+{
+  France: ["Lyon", "Paris"],
+  Germany: ["Berlin"]
+}
+
+13. Find and replace key-value pair in an array of objects
+let updatedUsers = users.map(
+  p => p.id !== 47 ? p : {...p, age: p.age + 1}
+);
+
+14. Union (A ∪ B) of arrays
+[...new Set([...arrA, ...arrB])]
+
+15. Intersection (A ∩ B) of arrays
+arrA.filter(it => arrB.includes(it));
+
+Difference (A \ B) of arrays
+arrA.filter(it => !arrB.includes(it));
